@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Salesforce CLI
         run: npm install -g @salesforce/cli
@@ -23,12 +25,8 @@ jobs:
             --sfdx-url-file auth.txt \
             --alias devagent1
 
-      - name: Verify Authentication
+      - name: Generate Delta Package
         run: |
-          sf org list
-
-      - name: Deploy Metadata
-        run: |
-          sf project deploy start \
-            --target-org devagent1 \
-            --ignore-conflicts
+          npx sfdx-git-delta@latest \
+            --from HEAD~1 \
+         
