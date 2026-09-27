@@ -1,0 +1,154 @@
+<template>
+    <template lwc:if={hasOrgDetails}>
+        <lightning-card title="Deploy Demo Bundles">
+            <div class="slds-var-p-around_medium">
+                <template lwc:if={deployStatus}>
+                    <div class={statusClass} role="status">
+                        {deployStatus}
+                    </div>
+                </template>
+                <template lwc:if={hasBundles}>
+                    <p class="slack-deploy-bundles__hint">
+                        Select a demo bundle to deploy into your slack org
+                    </p>
+                </template>
+                <template lwc:else>
+                    <p class="slack-deploy-bundles__hint">
+                        No demo bundles are configured for this org yet.
+                    </p>
+                </template>              
+                <ul class="slack-deploy-bundles__list">
+                    <template for:each={bundles} for:item="bundle">
+                        <li
+                            key={bundle.bundleKey}
+                            class="slack-deploy-bundles__item"
+                        >
+                            <button
+                                type="button"
+                                class="slack-deploy-bundles__tile"
+                                disabled={deploying}
+                                data-bundle-key={bundle.bundleKey}
+                                onclick={handleDeploy}
+                            >
+                                <span
+                                    class="slack-deploy-bundles__tile-icon"
+                                    aria-hidden="true"
+                                >
+                                    <template lwc:if={bundle.isBuildingIcon}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            focusable="false"
+                                        >
+                                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                                            <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                                            <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+                                            <path d="M10 6h4"/>
+                                            <path d="M10 10h4"/>
+                                            <path d="M10 14h4"/>
+                                            <path d="M10 18h4"/>
+                                        </svg>
+                                    </template>
+                                    <template lwc:elseif={bundle.isTrendingIcon}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            focusable="false"
+                                        >
+                                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                                            <polyline points="16 7 22 7 22 13"/>
+                                        </svg>
+                                    </template>
+                                    <template lwc:elseif={bundle.isTargetIcon}>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            focusable="false"
+                                        >
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <circle cx="12" cy="12" r="6"/>
+                                            <circle cx="12" cy="12" r="2"/>
+                                        </svg>
+                                    </template>
+                                    <template lwc:else>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            focusable="false"
+                                        >
+                                            <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73Z"/>
+                                            <path d="M12 22V12"/>
+                                            <polyline points="3.29 7 12 12 20.71 7"/>
+                                            <path d="m7.5 4.27 9 5.15"/>
+                                        </svg>
+                                    </template>
+                                </span>
+                                <span class="slack-deploy-bundles__tile-label"
+                                    >{bundle.label}</span
+                                >
+                                <span
+                                    class="slack-deploy-bundles__tile-plus"
+                                    aria-hidden="true"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        focusable="false"
+                                    >
+                                        <path d="M5 12h14"/>
+                                        <path d="M12 5v14"/>
+                                    </svg>
+                                </span>
+                            </button>
+                        </li>
+                    </template>
+                </ul>
+                <div class="slack-deploy-bundles__footer">
+                    <span>Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.8 122.8" class="slack-deploy-bundles__footer-icon">
+                        <path d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9zm6.5 0c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z" fill="#e01e5a"/>
+                        <path d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2zm0 6.5c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z" fill="#36c5f0"/>
+                        <path d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2zm-6.5 0c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z" fill="#2eb67d"/>
+                        <path d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z" fill="#ecb22e"/>
+                    </svg>
+                    <span class="slack-deploy-bundles__footer-brand">Demo Zone</span>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+</template>

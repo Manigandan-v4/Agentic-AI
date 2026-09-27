@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SuppScienceBsdTargetStatus</fullName>
+    <inlineHelpText>Specifies the status of the science-based emissions reduction target for this sustainability scorecard.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

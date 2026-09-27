@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Draft</fullName>
+        <default>false</default>
+        <label>Draft</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Paused</fullName>
+        <default>false</default>
+        <label>Paused</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ready</fullName>
+        <default>false</default>
+        <label>Ready</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Delivering</fullName>
+        <default>false</default>
+        <label>Delivering</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completed</label>
+    </standardValue>
+</StandardValueSet>

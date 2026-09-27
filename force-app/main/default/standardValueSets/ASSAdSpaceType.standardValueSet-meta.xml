@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Leaderboard</fullName>
+        <default>false</default>
+        <label>Leaderboard</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Skyscraper</fullName>
+        <default>false</default>
+        <label>Skyscraper</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Graphic Image</fullName>
+        <default>false</default>
+        <label>Graphic Image</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pre-Roll</fullName>
+        <default>false</default>
+        <label>Pre-Roll</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mid-Roll</fullName>
+        <default>false</default>
+        <label>Mid-Roll</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Post-Roll</fullName>
+        <default>false</default>
+        <label>Post-Roll</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Full banner WF DFP</fullName>
+        <default>false</default>
+        <label>Full banner WF DFP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1 Page Standard</fullName>
+        <default>false</default>
+        <label>1 Page Standard</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2 Page Spread</fullName>
+        <default>false</default>
+        <label>2 Page Spread</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2/3 Page Vertical</fullName>
+        <default>false</default>
+        <label>2/3 Page Vertical</label>
+    </standardValue>
+    <standardValue>
+        <fullName>1/2 Page Horizontal</fullName>
+        <default>false</default>
+        <label>1/2 Page Horizontal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Billboard</fullName>
+        <default>false</default>
+        <label>Billboard</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Spot Buy</fullName>
+        <default>false</default>
+        <label>Spot Buy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Title</fullName>
+        <default>false</default>
+        <label>Title</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Aston</fullName>
+        <default>false</default>
+        <label>Aston</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sting</fullName>
+        <default>false</default>
+        <label>Sting</label>
+    </standardValue>
+</StandardValueSet>

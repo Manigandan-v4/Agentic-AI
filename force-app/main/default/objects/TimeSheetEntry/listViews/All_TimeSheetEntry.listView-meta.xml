@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_TimeSheetEntry</fullName>
+    <columns>Name</columns>
+    <columns>CreatedDate</columns>
+    <columns>WorkOrder</columns>
+    <columns>WorkOrderLineItem</columns>
+    <columns>LocationTimeZone</columns>
+    <columns>StartTime</columns>
+    <columns>EndTime</columns>
+    <columns>DurationInMinutes</columns>
+    <columns>JobExpenseType</columns>
+    <columns>CostCenter</columns>
+    <columns>Category</columns>
+    <columns>Type</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Time Sheet Entries</label>
+</ListView>

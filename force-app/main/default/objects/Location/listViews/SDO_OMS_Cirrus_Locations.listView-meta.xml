@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDO_OMS_Cirrus_Locations</fullName>
+    <columns>Name</columns>
+    <columns>LocationType</columns>
+    <columns>TimeZone</columns>
+    <columns>ShouldSyncWithOci</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Name</field>
+        <operation>contains</operation>
+        <value>Cirrus</value>
+    </filters>
+    <label>Cirrus Locations</label>
+</ListView>

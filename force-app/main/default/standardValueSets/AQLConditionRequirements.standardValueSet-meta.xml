@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>All Conditions Are Met (AND)</fullName>
+        <default>false</default>
+        <label>All Conditions Are Met (AND)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Any Condition Is Met (OR)</fullName>
+        <default>false</default>
+        <label>Any Condition Is Met (OR)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Custom Condition Is Met</fullName>
+        <default>false</default>
+        <label>Custom Condition Is Met</label>
+    </standardValue>
+</StandardValueSet>

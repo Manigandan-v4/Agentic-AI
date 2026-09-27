@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IndustryBenchmarkScore</fullName>
+    <inlineHelpText>The percentage score representing the organization&apos;s sustainability performance relative to industry peers on standard benchmarks.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

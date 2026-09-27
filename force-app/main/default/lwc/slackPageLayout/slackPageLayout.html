@@ -1,0 +1,17 @@
+<template>
+    <div class="slack-page-container">
+        <c-slack-org-details org-details={orgDetails}></c-slack-org-details>
+
+        <div class="slack-page-layout">
+            <div class="slack-main-panel">
+                <c-slack-users-list></c-slack-users-list>
+            </div>
+            <div class="slack-side-panel">
+                <c-slack-deploy-bundles
+                    org-details={orgDetails}
+                ></c-slack-deploy-bundles>
+                <c-slack-resources></c-slack-resources>
+            </div>
+        </div>
+    </div>
+</template>

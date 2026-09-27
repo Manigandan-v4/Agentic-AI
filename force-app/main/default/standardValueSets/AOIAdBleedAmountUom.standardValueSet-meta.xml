@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Pixels</fullName>
+        <default>false</default>
+        <label>Pixels</label>
+    </standardValue>
+    <standardValue>
+        <fullName>mm</fullName>
+        <default>false</default>
+        <label>mm</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inches</fullName>
+        <default>false</default>
+        <label>Inches</label>
+    </standardValue>
+</StandardValueSet>

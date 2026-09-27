@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Standard</fullName>
+        <default>false</default>
+        <label>Standard</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bookend</fullName>
+        <default>false</default>
+        <label>Bookend</label>
+    </standardValue>
+    <standardValue>
+        <fullName>PiggyBack</fullName>
+        <default>false</default>
+        <label>PiggyBack</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Billboard</fullName>
+        <default>false</default>
+        <label>Billboard</label>
+    </standardValue>
+</StandardValueSet>

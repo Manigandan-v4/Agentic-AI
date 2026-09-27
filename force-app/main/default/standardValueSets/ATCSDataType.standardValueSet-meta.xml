@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Text</fullName>
+        <default>false</default>
+        <label>Text</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Number</fullName>
+        <default>false</default>
+        <label>Number</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Boolean</fullName>
+        <default>false</default>
+        <label>Boolean</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Picklist</fullName>
+        <default>false</default>
+        <label>Picklist</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MultiSelectPicklist</fullName>
+        <default>false</default>
+        <label>MultiSelectPicklist</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Datetime</fullName>
+        <default>false</default>
+        <label>Datetime</label>
+    </standardValue>
+</StandardValueSet>

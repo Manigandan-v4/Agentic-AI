@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Certified in Total</fullName>
+        <default>false</default>
+        <label>Certified in Total</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Certified - Partial</fullName>
+        <default>false</default>
+        <label>Certified - Partial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modified</fullName>
+        <default>false</default>
+        <label>Modified</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Certified</fullName>
+        <default>false</default>
+        <label>Not Certified</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <label>Cancelled</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contact Payer</fullName>
+        <default>false</default>
+        <label>Contact Payer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No Action Required</fullName>
+        <default>false</default>
+        <label>No Action Required</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Complete</fullName>
+        <default>false</default>
+        <label>Complete</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Term Expired</fullName>
+        <default>false</default>
+        <label>Term Expired</label>
+    </standardValue>
+</StandardValueSet>

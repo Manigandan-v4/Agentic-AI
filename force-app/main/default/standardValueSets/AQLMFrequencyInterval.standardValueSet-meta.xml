@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Second</fullName>
+        <default>false</default>
+        <label>Second</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Minute</fullName>
+        <default>false</default>
+        <label>Minute</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Hour</fullName>
+        <default>false</default>
+        <label>Hour</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Day</fullName>
+        <default>false</default>
+        <label>Day</label>
+    </standardValue>
+</StandardValueSet>

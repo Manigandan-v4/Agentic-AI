@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Repeat</fullName>
+        <default>false</default>
+        <label>Repeat</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Regular</fullName>
+        <default>false</default>
+        <label>Regular</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Premiere</fullName>
+        <default>false</default>
+        <label>Premiere</label>
+    </standardValue>
+</StandardValueSet>

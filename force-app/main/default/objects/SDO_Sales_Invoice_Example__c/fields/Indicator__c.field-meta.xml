@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indicator__c</fullName>
+    <description>This field is an icon that indicates status, tied to the Invoice Status field.</description>
+    <externalId>false</externalId>
+    <formula>IMAGE(URLsrc__c&amp;&quot;/servlet/servlet.ImageServer?id=&quot;&amp;CASE( Status__c, 
+&quot;Draft&quot;, &quot;015ak00000I0nch&amp;oid=00Dak00001Gf5zt&quot;, 
+&quot;Pending&quot;,&quot;015ak00000I0nci&amp;oid=00Dak00001Gf5zt&quot;, 
+&quot;Finalized&quot;, &quot;015ak00000I0ncj&amp;oid=00Dak00001Gf5zt&quot;, 
+&quot;Overdue&quot;,&quot;015ak00000I0nck&amp;oid=00Dak00001Gf5zt&quot;, 
+&quot;015ak00000I0ncj&amp;oid=00Dak00001Gf5zt&quot;),&quot;Status&quot;,24,24)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Indicator</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

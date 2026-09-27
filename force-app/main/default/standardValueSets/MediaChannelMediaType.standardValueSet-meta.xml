@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Digital</fullName>
+        <default>false</default>
+        <label>Digital</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Outdoor</fullName>
+        <default>false</default>
+        <label>Outdoor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Print</fullName>
+        <default>false</default>
+        <label>Print</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Radio</fullName>
+        <default>false</default>
+        <label>Radio</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TV</fullName>
+        <default>false</default>
+        <label>TV</label>
+    </standardValue>
+</StandardValueSet>

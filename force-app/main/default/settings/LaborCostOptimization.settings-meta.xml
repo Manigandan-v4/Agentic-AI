@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LaborCostOptimizationSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canShowVehicle>true</canShowVehicle>
+    <canShowVehicleDefinition>false</canShowVehicleDefinition>
+    <enableTimeSheetsAndLaborCostOptimization>true</enableTimeSheetsAndLaborCostOptimization>
+    <endTimeOffset>15</endTimeOffset>
+    <startTimeOffset>15</startTimeOffset>
+</LaborCostOptimizationSettings>

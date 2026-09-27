@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Record Channels" icon-name="standard:record_lookup">
+        <div class="slds-var-p-around_medium">
+            <!-- Error state -->
+            <template lwc:if={error}>
+                <div class="slds-text-color_error" role="alert">{error}</div>
+            </template>
+
+            <!-- Data state -->
+            <template lwc:elseif={hasRows}>
+                <lightning-datatable
+                    key-field="id"
+                    data={rows}
+                    columns={columns}
+                    hide-checkbox-column
+                    column-widths-mode="auto"
+                ></lightning-datatable>
+            </template>
+
+            <!-- Empty state -->
+            <template lwc:elseif={showEmptyState}>
+                <p class="slds-text-body_regular slds-text-color_weak">
+                    No record channels are linked to this demo bundle yet.
+                </p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

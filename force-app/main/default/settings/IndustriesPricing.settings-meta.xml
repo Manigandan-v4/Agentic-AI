@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IndustriesPricingSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableDebugPriceLogs>false</enableDebugPriceLogs>
+    <enableHighAvailability>false</enableHighAvailability>
+    <enableHighestPriceCompliance>false</enableHighestPriceCompliance>
+    <enableLowestPriceCompliance>false</enableLowestPriceCompliance>
+    <enablePricingProcParallelization>false</enablePricingProcParallelization>
+    <enablePricingWaterfall>false</enablePricingWaterfall>
+    <enablePricingWaterfallPersistence>false</enablePricingWaterfallPersistence>
+    <enableSalesforcePricing>true</enableSalesforcePricing>
+</IndustriesPricingSettings>

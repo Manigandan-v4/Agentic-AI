@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>LIFETIME</fullName>
+        <default>false</default>
+        <label>LIFETIME</label>
+    </standardValue>
+    <standardValue>
+        <fullName>DAILY</fullName>
+        <default>false</default>
+        <label>DAILY</label>
+    </standardValue>
+</StandardValueSet>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Optimaliseringsverzoek</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Optimaliseringsverzoeken</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>SDO SFS Optimization Request Layout</layout>
+        <sections>
+            <label><!-- Optimization Run Details --></label>
+            <section>Optimization Run Details</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel>Nummer optimalisatieverzoek</nameFieldLabel>
+</CustomObjectTranslation>

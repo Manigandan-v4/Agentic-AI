@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Presented By</fullName>
+        <default>false</default>
+        <label>Presented By</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Co Presented By</fullName>
+        <default>false</default>
+        <label>Co Presented By</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sponsored By</fullName>
+        <default>false</default>
+        <label>Sponsored By</label>
+    </standardValue>
+</StandardValueSet>

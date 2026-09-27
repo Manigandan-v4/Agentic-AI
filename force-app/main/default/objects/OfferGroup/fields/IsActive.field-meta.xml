@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsActive</fullName>
+    <inlineHelpText>Inactive offer groups don&apos;t appear in the Offer Creation wizard and are unavailable for filtering offers in APIs.</inlineHelpText>
+</CustomField>

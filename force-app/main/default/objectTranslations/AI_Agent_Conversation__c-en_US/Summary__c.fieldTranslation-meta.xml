@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>
+        <!-- Shown in the Summary column - should be a a series of values separate by a pipe |
+e.g. Subject of the conversation | High | Contact Name -->
+    </help>
+    <label><!-- Summary --></label>
+    <name>Summary__c</name>
+</CustomFieldTranslation>

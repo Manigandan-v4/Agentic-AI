@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Page 3</fullName>
+        <default>false</default>
+        <label>Page 3</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Front cover</fullName>
+        <default>false</default>
+        <label>Front cover</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Back cover</fullName>
+        <default>false</default>
+        <label>Back cover</label>
+    </standardValue>
+</StandardValueSet>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReferralScore</fullName>
+    <inlineHelpText>AI-generated score from a model your organization trains on your data. It does not make clinical decisions or trigger automated actions. Use it only to help choose which referrals to review first. Coordinators still complete every referral. Do not rely on this score alone.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

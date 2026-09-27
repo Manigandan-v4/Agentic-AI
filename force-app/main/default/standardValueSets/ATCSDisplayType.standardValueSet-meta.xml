@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Checklist</fullName>
+        <default>false</default>
+        <label>Checklist</label>
+    </standardValue>
+    <standardValue>
+        <fullName>RadioButton</fullName>
+        <default>false</default>
+        <label>RadioButton</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Checkbox</fullName>
+        <default>false</default>
+        <label>Checkbox</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Picklist</fullName>
+        <default>false</default>
+        <label>Picklist</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Datetime</fullName>
+        <default>false</default>
+        <label>Datetime</label>
+    </standardValue>
+</StandardValueSet>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Above the fold</fullName>
+        <default>false</default>
+        <label>Above the fold</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bottom right</fullName>
+        <default>false</default>
+        <label>Bottom right</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Top left</fullName>
+        <default>false</default>
+        <label>Top left</label>
+    </standardValue>
+</StandardValueSet>
