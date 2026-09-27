@@ -25,14 +25,23 @@ jobs:
             --sfdx-url-file auth.txt \
             --alias devagent1
 
-     - name: Install SFDX Git Delta
-  run: |
-    echo y | sf plugins install sfdx-git-delta
+      - name: Install SFDX Git Delta
+        run: |
+          echo y | sf plugins install sfdx-git-delta
 
-- name: Generate Delta Package
-  run: |
-    sf sgd source delta \
-      --from HEAD~1 \
-      --to HEAD \
-      --output-dir delta
-         
+      - name: Generate Delta Package
+        run: |
+          sf sgd source delta \
+            --from HEAD~1 \
+            --to HEAD \
+            --output-dir delta
+
+      - name: Show Delta Contents
+        run: |
+          ls -R delta
+
+      - name: Deploy Delta Components
+        run: |
+          sf project deploy start \
+            --manifest delta/package/package.xml \
+            --target-org devagent1
