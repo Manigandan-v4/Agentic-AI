@@ -1,0 +1,34 @@
+name: Deploy to DevAgent1
+
+on:
+  push:
+    branches:
+      - devagent1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: npm install -g @salesforce/cli
+
+      - name: Authenticate Salesforce Org
+        run: |
+          echo "${{ secrets.DEV_SFDX_AUTH_URL }}" > auth.txt
+          sf org login sfdx-url \
+            --sfdx-url-file auth.txt \
+            --alias devagent1
+
+      - name: Verify Authentication
+        run: |
+          sf org list
+
+      - name: Deploy Metadata
+        run: |
+          sf project deploy start \
+            --target-org devagent1 \
+            --ignore-conflicts
