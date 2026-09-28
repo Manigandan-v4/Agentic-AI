@@ -1,12 +1,9 @@
-import { commitChanges } from "../tools/commitChanges.js";
+﻿import { commitChanges } from "../tools/commitChanges.js";
 import { createCustomField } from "../tools/createCustomField.js";
 import { createFeatureBranch } from "../tools/createFeatureBranch.js";
 import { createPullRequest } from "../tools/createPullRequest.js";
 import { pushBranch } from "../tools/pushBranch.js";
 
-/**
- * Extract a readable message from different tool result formats.
- */
 function getResultText(result) {
   if (!result) {
     return "";
@@ -23,55 +20,31 @@ function getResultText(result) {
       .join("\n");
   }
 
-  if (typeof result?.message === "string") {
-    return result.message;
-  }
-
-  return "";
+  return result?.message || "";
 }
 
-/**
- * Determine whether a tool result should be considered successful.
- *
- * This supports:
- * - normal return values
- * - { success: true }
- * - MCP-style { content: [...] }
- * - tools that return nothing when successful
- */
 function isSuccessful(result) {
-  if (result === undefined || result === null) {
-    return true;
+  if (!result) {
+    return false;
   }
 
-  if (typeof result?.success === "boolean") {
+  if (typeof result.success === "boolean") {
     return result.success;
   }
 
-  if (typeof result?.ok === "boolean") {
+  if (typeof result.ok === "boolean") {
     return result.ok;
   }
 
-  if (Array.isArray(result?.content)) {
-    const text = getResultText(result).toLowerCase();
+  const text = getResultText(result).toLowerCase();
 
-    if (
-      text.includes("failed") ||
-      text.includes("error") ||
-      text.includes("❌")
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  return true;
+  return !(
+    text.includes("failed") ||
+    text.includes("error") ||
+    text.includes("❌")
+  );
 }
 
-/**
- * Convert user input into a safe branch name.
- */
 function normalizeBranchName(value) {
   return String(value)
     .trim()
@@ -81,281 +54,212 @@ function normalizeBranchName(value) {
     .replace(/-+/g, "-");
 }
 
-/**
- * Validate Salesforce metadata input.
- */
-function validateInput(objectName, fieldName, fieldType) {
-  if (!objectName || !String(objectName).trim()) {
-    throw new Error("objectName is required.");
+function normalizeRequest(args) {
+  if (Array.isArray(args?.changes)) {
+    return args.changes;
   }
 
-  if (!fieldName || !String(fieldName).trim()) {
-    throw new Error("fieldName is required.");
+  if (args?.objectName && args?.fieldName && args?.fieldType) {
+    return [
+      {
+        type: "field",
+        objectName: args.objectName,
+        fieldName: args.fieldName,
+        fieldType: args.fieldType
+      }
+    ];
   }
 
-  if (!fieldType || !String(fieldType).trim()) {
-    throw new Error("fieldType is required.");
+  throw new Error("No valid Salesforce changes were provided.");
+}
+
+function validateChange(change) {
+  if (!change) {
+    throw new Error("Invalid empty change.");
   }
 
-  const normalizedObjectName = String(objectName).trim();
-  const normalizedFieldName = String(fieldName).trim();
-  const normalizedFieldType = String(fieldType).trim();
+  const type = String(change.type || "").trim().toLowerCase();
 
-  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(normalizedObjectName)) {
-    throw new Error(
-      `Invalid Salesforce object name: ${normalizedObjectName}`
-    );
+  if (type !== "field") {
+    throw new Error(`Unsupported change type: ${change.type}`);
   }
 
-  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(normalizedFieldName)) {
-    throw new Error(
-      `Invalid Salesforce field name: ${normalizedFieldName}`
-    );
-  }
-
-  const allowedFieldTypes = new Set([
-    "Text",
-    "Number",
-    "Checkbox",
-    "Date",
-    "DateTime",
-    "Currency",
-    "Email",
-    "Phone",
-    "Url",
-    "Text Area",
-    "Long Text Area"
-  ]);
-
-  const matchedType = [...allowedFieldTypes].find(
-    (type) => type.toLowerCase() === normalizedFieldType.toLowerCase()
-  );
-
-  if (!matchedType) {
-    throw new Error(
-      `Unsupported field type: ${normalizedFieldType}. ` +
-        `Supported types: ${[...allowedFieldTypes].join(", ")}`
-    );
+  if (!change.objectName || !change.fieldName || !change.fieldType) {
+    throw new Error("Each field change requires objectName, fieldName and fieldType.");
   }
 
   return {
-    objectName: normalizedObjectName,
-    fieldName: normalizedFieldName,
-    fieldType: matchedType
+    type: "field",
+    objectName: String(change.objectName).trim(),
+    fieldName: String(change.fieldName).trim(),
+    fieldType: String(change.fieldType).trim()
   };
 }
 
-/**
- * Developer Agent
- *
- * Workflow:
- * 1. Validate request
- * 2. Create feature branch
- * 3. Create Salesforce field
- * 4. Commit changes
- * 5. Push branch
- * 6. Create Pull Request
- */
-export async function developerAgent(
-  objectName,
-  fieldName,
-  fieldType
-) {
-  const status = {
-    branch: {
-      success: false,
-      result: null
-    },
-    metadata: {
-      success: false,
-      result: null
-    },
-    commit: {
-      success: false,
-      result: null
-    },
-    push: {
-      success: false,
-      result: null
-    },
-    pullRequest: {
-      success: false,
-      result: null
+function collectFiles(target, result) {
+  if (Array.isArray(result?.changedFiles)) {
+    for (const file of result.changedFiles) {
+      if (file && !target.includes(file)) {
+        target.push(file);
+      }
     }
+  }
+}
+
+export async function developerAgent(objectNameOrArgs, fieldName, fieldType) {
+  const changedFiles = [];
+
+  const args =
+    typeof objectNameOrArgs === "object" && objectNameOrArgs !== null
+      ? objectNameOrArgs
+      : {
+          objectName: objectNameOrArgs,
+          fieldName,
+          fieldType
+        };
+
+  const changes = normalizeRequest(args).map(validateChange);
+
+  const status = {
+    branch: false,
+    metadata: false,
+    commit: false,
+    push: false,
+    pullRequest: false
   };
 
   try {
-    // ------------------------------------------------------------
-    // 1. Validate input
-    // ------------------------------------------------------------
-    const input = validateInput(
-      objectName,
-      fieldName,
-      fieldType
-    );
-
-    const safeBranchName = normalizeBranchName(
-      `${input.objectName}-${input.fieldName}`
-    );
-
-    if (!safeBranchName) {
-      throw new Error("Unable to generate a valid feature branch name.");
+    if (changes.length === 0) {
+      throw new Error("At least one Salesforce change is required.");
     }
 
-    const branchName = `feature/${safeBranchName}`;
-    const fieldApiName = `${input.fieldName}__c`;
+    const branchParts = [
+      changes[0].objectName,
+      "changes",
+      ...changes.map((change) => change.fieldName)
+    ];
+    const featureName = normalizeBranchName(branchParts.join("-"));
 
-    // ------------------------------------------------------------
-    // 2. Create feature branch
-    // ------------------------------------------------------------
-    const branchResult = await createFeatureBranch(
-      safeBranchName
-    );
-
-    status.branch.result = branchResult;
-    status.branch.success = isSuccessful(branchResult);
-
-    if (!status.branch.success) {
-      throw new Error(
-        `Feature branch creation failed. ${
-          getResultText(branchResult) || "No additional details."
-        }`
-      );
+    if (!featureName) {
+      throw new Error("Unable to generate a feature branch name.");
     }
 
-    // ------------------------------------------------------------
-    // 3. Create Salesforce custom field
-    // ------------------------------------------------------------
-    const metadataResult = await createCustomField(
-      input.objectName,
-      input.fieldName,
-      input.fieldType
-    );
+    const branchName = `feature/${featureName}`;
 
-    status.metadata.result = metadataResult;
-    status.metadata.success = isSuccessful(metadataResult);
+    const branchResult = await createFeatureBranch(featureName);
+    status.branch = isSuccessful(branchResult);
 
-    if (!status.metadata.success) {
-      throw new Error(
-        `Salesforce field creation failed. ${
-          getResultText(metadataResult) || "No additional details."
-        }`
-      );
+    if (!status.branch) {
+      throw new Error(getResultText(branchResult) || "Feature branch creation failed.");
     }
 
-    // ------------------------------------------------------------
-    // 4. Commit changes
-    // ------------------------------------------------------------
+    for (const change of changes) {
+      if (change.type === "field") {
+        const result = await createCustomField(change.objectName, change.fieldName, change.fieldType);
+
+        if (!isSuccessful(result)) {
+          throw new Error(getResultText(result) || `Failed to create field ${change.fieldName}.`);
+        }
+
+        collectFiles(changedFiles, result);
+      }
+    }
+
+    if (changedFiles.length === 0) {
+      throw new Error("No agent-owned files were produced. Commit blocked.");
+    }
+
+    status.metadata = true;
+
     const commitMessage =
-      `Added ${fieldApiName} on ${input.objectName}`;
+      changes.length === 1
+        ? `Salesforce change: ${changes[0].objectName}.${changes[0].fieldName}__c`
+        : `Salesforce change: ${changes.length} changes on ${changes[0].objectName}`;
 
-    const commitResult = await commitChanges(
-      commitMessage
-    );
+    const commitResult = await commitChanges(commitMessage, changedFiles);
+    status.commit = isSuccessful(commitResult);
 
-    status.commit.result = commitResult;
-    status.commit.success = isSuccessful(commitResult);
-
-    if (!status.commit.success) {
-      throw new Error(
-        `Commit failed. ${
-          getResultText(commitResult) || "No additional details."
-        }`
-      );
+    if (!status.commit) {
+      throw new Error(getResultText(commitResult) || "Commit failed.");
     }
 
-    // ------------------------------------------------------------
-    // 5. Push branch
-    // ------------------------------------------------------------
     const pushResult = await pushBranch();
+    status.push = isSuccessful(pushResult);
 
-    status.push.result = pushResult;
-    status.push.success = isSuccessful(pushResult);
-
-    if (!status.push.success) {
-      throw new Error(
-        `Branch push failed. ${
-          getResultText(pushResult) || "No additional details."
-        }`
-      );
+    if (!status.push) {
+      throw new Error(getResultText(pushResult) || "Push failed.");
     }
 
-    // ------------------------------------------------------------
-    // 6. Create Pull Request
-    // ------------------------------------------------------------
-    const pullRequestTitle =
-      `Add ${input.fieldName} field on ${input.objectName}`;
+    const changeSummary = changes
+      .map((change) => `- ${change.objectName}.${change.fieldName}__c (${change.fieldType})`)
+      .join("\n");
 
-    const pullRequestResult = await createPullRequest(
+    const prResult = await createPullRequest(
       branchName,
       "devagent1",
-      pullRequestTitle
+      changes.length === 1
+        ? `Add ${changes[0].fieldName} field on ${changes[0].objectName}`
+        : `Salesforce change: ${changes.length} changes`,
+      [
+        "Created automatically by Salesforce MCP Developer Agent.",
+        "",
+        "Requested changes:",
+        changeSummary,
+        "",
+        `Files committed: ${changedFiles.length}`,
+        ...changedFiles.map((file) => `- ${file}`),
+        "",
+        `Commit: ${commitResult.commitId || "unknown"}`
+      ].join("\n")
     );
 
-    status.pullRequest.result = pullRequestResult;
-    status.pullRequest.success =
-      isSuccessful(pullRequestResult);
+    status.pullRequest = isSuccessful(prResult);
 
-    if (!status.pullRequest.success) {
-      throw new Error(
-        `Pull Request creation failed. ${
-          getResultText(pullRequestResult) ||
-          "No additional details."
-        }`
-      );
+    if (!status.pullRequest) {
+      throw new Error(getResultText(prResult) || "Pull Request creation failed.");
     }
 
-    // ------------------------------------------------------------
-    // 7. Success response
-    // ------------------------------------------------------------
-    const prText = getResultText(pullRequestResult);
-
     return {
+      success: true,
+      branchName,
+      changedFiles,
+      commitId: commitResult.commitId,
+      pullRequestUrl: prResult.pullRequestUrl,
       content: [
         {
           type: "text",
           text:
             `✅ Developer Agent completed successfully.\n\n` +
-            `Object: ${input.objectName}\n` +
-            `Field: ${fieldApiName}\n` +
-            `Field Type: ${input.fieldType}\n` +
-            `Branch: ${branchName}\n` +
-            `Commit: ✅\n` +
-            `Push: ✅\n` +
-            `Pull Request: ✅\n` +
-            (prText ? `\nPR Details:\n${prText}` : "")
+            `Changes requested: ${changes.length}\n` +
+            changes
+              .map((change) => `- ${change.objectName}.${change.fieldName}__c (${change.fieldType})`)
+              .join("\n") +
+            `\n\nFiles committed: ${changedFiles.length}\n` +
+            changedFiles.map((file) => `- ${file}`).join("\n") +
+            `\n\nBranch: ${branchName}\n` +
+            `Commit: ${commitResult.commitId}\n` +
+            `PR: ${prResult.pullRequestUrl || getResultText(prResult)}`
         }
       ]
     };
   } catch (error) {
-    const message =
-      error instanceof Error
-        ? error.message
-        : String(error);
-
     return {
+      success: false,
+      changedFiles,
       content: [
         {
           type: "text",
           text:
             `❌ Developer Agent failed.\n\n` +
-            `${message}\n\n` +
-            `Execution status:\n` +
-            `Branch: ${
-              status.branch.success ? "✅" : "❌"
-            }\n` +
-            `Metadata: ${
-              status.metadata.success ? "✅" : "❌"
-            }\n` +
-            `Commit: ${
-              status.commit.success ? "✅" : "❌"
-            }\n` +
-            `Push: ${
-              status.push.success ? "✅" : "❌"
-            }\n` +
-            `Pull Request: ${
-              status.pullRequest.success ? "✅" : "❌"
-            }`
+            `${error instanceof Error ? error.message : String(error)}\n\n` +
+            `Agent-owned files: ${changedFiles.length}\n` +
+            (changedFiles.length ? changedFiles.map((file) => `- ${file}`).join("\n") : "None") +
+            `\n\nExecution status:\n` +
+            `Branch: ${status.branch ? "✅" : "❌"}\n` +
+            `Metadata: ${status.metadata ? "✅" : "❌"}\n` +
+            `Commit: ${status.commit ? "✅" : "❌"}\n` +
+            `Push: ${status.push ? "✅" : "❌"}\n` +
+            `PR: ${status.pullRequest ? "✅" : "❌"}`
         }
       ]
     };
